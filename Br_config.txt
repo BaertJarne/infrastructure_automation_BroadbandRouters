@@ -1,0 +1,81 @@
+ena
+conf t
+hostname Br
+end
+conf t
+int gi0/0
+description WAN
+ip address dhcp
+ip nat outside
+no shut
+!
+exit
+ip route 0.0.0.0 0.0.0.0 
+no shut
+!
+ip nat inside source list 1 interface gi0/0 overload
+access-list 1 permit 192.168.0.0 0.0.255.255
+no shut
+end
+conf t
+int gi0/1
+description Servers
+encapsulation dot1Q 10
+ip address 192.168.10.254 255.255.255.0
+ip nat inside
+no shut
+!
+ip nat inside source list 1 interface gi0/0 overload
+access-list 1 permit 192.168.0.0 0.0.255.255
+no shut
+end
+conf t
+int gi0/1
+description Accounting
+encapsulation dot1Q 20
+ip address 192.168.20.254 255.255.255.0
+ip nat inside
+no shut
+!
+ip nat inside source list 1 interface gi0/0 overload
+access-list 1 permit 192.168.0.0 0.0.255.255
+no shut
+end
+conf t
+int gi0/1
+description HR
+encapsulation dot1Q 30
+ip address 192.168.30.254 255.255.255.0
+ip nat inside
+no shut
+!
+ip nat inside source list 1 interface gi0/0 overload
+access-list 1 permit 192.168.0.0 0.0.255.255
+no shut
+end
+conf t
+int gi0/1
+description Marketing
+encapsulation dot1Q 40
+ip address 192.168.40.254 255.255.255.0
+ip nat inside
+no shut
+!
+ip nat inside source list 1 interface gi0/0 overload
+access-list 1 permit 192.168.0.0 0.0.255.255
+no shut
+end
+conf t
+int gi0/1
+description Production
+encapsulation dot1Q 50
+ip address 192.168.50.254 255.255.255.0
+ip nat inside
+no shut
+!
+ip nat inside source list 1 interface gi0/0 overload
+access-list 1 permit 192.168.0.0 0.0.255.255
+no shut
+end
+end
+wr
